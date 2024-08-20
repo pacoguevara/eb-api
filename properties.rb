@@ -18,6 +18,14 @@ module EasyBroker
       'Something went wrong'
     end
 
+    def list_titles
+      titles = []
+      content.each do |property|
+        titles << property["title"]
+      end
+      titles
+    end
+
     attr_reader :content, :page, :total
   end
 end
