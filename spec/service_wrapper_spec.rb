@@ -1,5 +1,3 @@
-require 'uri'
-require 'net/http'
 require 'fakeweb'
 require_relative '../service_wrapper'
 
@@ -170,8 +168,6 @@ describe EasyBroker::ServiceWrapper do
   end
 
   let(:url) { URI("https://api.stagingeb.com/v1/properties?page=1&limit=5") }
-  let(:http) { Net::HTTP.new(url.host, url.port) }
-  let(:http_request) { Net::HTTP::Get.new(url) }
 
   subject { described_class.make_request(page: 1, limit: 5) }
 
