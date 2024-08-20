@@ -192,6 +192,28 @@ describe EasyBroker::Properties do
     end
   end
 
+  describe '.get_titles' do
+    it 'returns a list of titles' do
+      expect(described_class.get_titles).to include('Casa bien bonita',
+                                                         'Bodega en Naucalpan',
+                                                         'Casa en Renta en Residencial Privada Jardín, Juárez, N.L.',
+                                                         'Casa en Renta en Col. Obrerista en Monterrey, N.L.',
+                                                         'Casa en Venta en Nuevo Amanecer en Apodaca, N.L.')
+    end
+
+    context 'when something went wrong with the service' do
+      before(:each) do
+        allow(EasyBroker::ServiceWrapper).to receive(:make_request).and_throw(StandardError)
+      end
+
+      subject { described_class.get_titles }
+
+      it 'catch the exception and return an error message' do
+        expect(subject).to eq('Something went wrong')
+      end
+    end
+  end
+
   describe '#titles' do
     let(:parsed_response) { JSON.parse(eb_response) }
     let(:pagination) { parsed_response['pagination'] }

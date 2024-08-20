@@ -18,6 +18,13 @@ module EasyBroker
       'Something went wrong'
     end
 
+    def self.get_titles
+      result = get(page: 1)
+      return result if result.is_a?(String)
+      
+      result.list_titles
+    end
+
     def list_titles
       titles = []
       content.each do |property|
